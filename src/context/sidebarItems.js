@@ -20,7 +20,7 @@ export default [
   },
 ]
 
-const actionTypes = {
+export const actionTypes = {
   MOVE_BOX: "MOVE_BOX",
   SAY: "SAY",
   MOVE: "MOVE",
@@ -31,6 +31,7 @@ const actionTypes = {
   REPEAT: "REPEAT",
   END: "END",
   IF: "IF",
+  EVENT_CLICK: "EVENT_CLICK",
 }
 
 export const blocks = [
@@ -122,7 +123,7 @@ export const blocks = [
   {
     id: "9",
     action: {
-      type: actionTypes.IF,
+      type: actionTypes.EVENT_CLICK,
       payload: {
         what: "flag",
         condition: "clicked",
@@ -138,8 +139,11 @@ export const blocks = [
   {
     id: "10",
     action: {
-      type: "",
-      payload: null,
+      type: actionTypes.EVENT_CLICK,
+      payload: {
+        what: "sprite",
+        condition: "clicked",
+      },
     },
     name: "Events",
     component: <>{"When this sprite clicked"}</>,

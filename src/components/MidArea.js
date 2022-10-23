@@ -18,7 +18,9 @@ export default function MidArea() {
         // const left = Math.round(item.left + delta.x)
         // const top = Math.round(item.top + delta.y)
         // console.log({ item, delta })
-        addCurrentBlock(item, delta)
+        // addCurrentBlock(item, delta)
+        addBlocks(item, delta)
+
         return undefined
       },
     }),

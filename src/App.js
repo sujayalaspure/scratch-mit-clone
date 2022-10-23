@@ -5,11 +5,11 @@ import PreviewArea from "./components/PreviewArea"
 
 import { DndProvider } from "react-dnd"
 import { HTML5Backend } from "react-dnd-html5-backend"
-import ContextProvider from "./context"
+import ContextProvider, { withBlocks } from "./context"
 
-export default function App() {
+function App() {
   return (
-    <ContextProvider>
+    <>
       <div className="bg-blue-100 pt-6 font-sans">
         <div className="h-screen overflow-hidden flex flex-row  ">
           <DndProvider backend={HTML5Backend}>
@@ -17,11 +17,11 @@ export default function App() {
               <Sidebar /> <MidArea />
             </div>
           </DndProvider>
-          <div className="w-1/3 h-screen overflow-hidden flex flex-row bg-white border-t border-l border-gray-200 rounded-tl-xl ml-2">
-            <PreviewArea />
-          </div>
+          <PreviewArea />
         </div>
       </div>
-    </ContextProvider>
+    </>
   )
 }
+
+export default withBlocks(App)
