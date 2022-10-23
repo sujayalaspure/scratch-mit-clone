@@ -13,9 +13,9 @@ const ContextProvider = ({ children }) => {
   })
 
   const addBlocks = (newBlock, pos) => {
-    if (position.x === 0 && position.y === 0) {
-      setPosition(pos)
-    }
+    // if (position.x === 0 && position.y === 0) {
+    //   setPosition(pos)
+    // }
     setRunningBlocks((prev) => {
       return [...prev, { ...newBlock, id: lastId }]
     })
