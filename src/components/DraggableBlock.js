@@ -1,14 +1,12 @@
 import React from "react"
 import { useDrag } from "react-dnd"
-import Block from "./Block"
 
 function DraggableBlock(props) {
-  // console.log("props", props)
-  const { id, children, bgColor, action } = props
+  const { params, type } = props
   const [{ isDragging }, drag] = useDrag(
     () => ({
       type: "box",
-      item: { id, children, bgColor, action },
+      item: { params, type },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
       }),
@@ -17,8 +15,13 @@ function DraggableBlock(props) {
   )
 
   return (
-    <div ref={drag} className={`${isDragging && "border-black border-2"}`}>
-      <Block bgColor={bgColor}>{children}</Block>
+    <div
+      ref={drag}
+      className={`${isDragging && "border-2 opacity-70"} ${
+        params.bgColor
+      } text-white p-2 my-1 w-max text-center text-sm cursor-pointer rounded-sm flex flex-row items-center`}
+    >
+      {props.children}
     </div>
   )
 }

@@ -1,11 +1,13 @@
-import React, { useEffect } from "react"
-import { useDrag, useDrop } from "react-dnd"
-import Block from "./Block"
+import React from "react"
+import { useDrop } from "react-dnd"
+import { useBlocks } from "../context"
+import runEvent from "../Events"
 import { ItemTypes } from "../ItemTypes"
-import { getEmptyImage } from "react-dnd-html5-backend"
+import getComponent, { blockType } from "./getBlockComp"
 
 function DropArea({ onDrop, blocks, pos }) {
-  const { x, y } = pos
+  const { currentActiveSprite, setCurrentActiveSprite } = useBlocks()
+
   const [{ isOver, canDrop }, drop] = useDrop(
     () => ({
       accept: ItemTypes.BOX,
@@ -18,50 +20,57 @@ function DropArea({ onDrop, blocks, pos }) {
     []
   )
 
-  const [{ isDragging }, drag, preview] = useDrag(
-    () => ({
-      type: ItemTypes.BOX,
-      item: { x, y },
-      collect: (monitor) => ({
-        isDragging: monitor.isDragging(),
-      }),
-    }),
-    [x, y]
-  )
-  useEffect(() => {
-    preview(getEmptyImage(), { captureDraggingState: true })
-  }, [])
+  const handlePlay = (e) => {
+    console.log("play")
+
+    e.stopPropagation()
+    if (blocks.length === 0) return
+    let i = 0
+    const interval = setInterval(() => {
+      console.log("interval", i)
+      const { type, params } = blocks[i]
+      if (type === blockType.TURN) {
+        const ang = params.direction === "left" ? -1 * params.degrees : params.degrees
+        setCurrentActiveSprite((prev) => ({
+          ...prev,
+          angle: prev.angle + ang,
+        }))
+      }
+      runEvent(currentActiveSprite, type, params)
+      i++
+      if (i >= blocks.length) clearInterval(interval)
+    }, 1000)
+  }
 
   const isActive = isOver
-  let backgroundColor = "#0000"
-  const bg = isActive ? "bg-green-100" : "bg-white"
-  if (isActive) {
-    backgroundColor = "darkgreen"
-  } else if (canDrop) {
-    backgroundColor = "darkkhaki"
-  }
+  const bg = isActive ? "bg-green-100" : canDrop ? "bg-red-100" : "bg-white"
 
   return (
     <div
       ref={drop}
+      className={`max-w-sm w-max border border-dashed border-gray-400  absolute rounded overflow-hidden shadow-lg ${bg} items-center flex flex-col`}
       style={{
-        backgroundColor,
-        minHeight: 100,
-        minWidth: 100,
-        width: "max-content",
-        border: "1px dotted black",
-        position: "absolute",
         top: pos.y + "px",
         left: pos.x + "px",
-        // transform: `translate3d(${x}px, ${y}px, 0)`,
       }}
     >
-      {/* <h1>Hello</h1> */}
-      {blocks?.map((item, index) => (
-        <Block key={item.id} bgColor={item.bgColor}>
-          {item.children}
-        </Block>
-      ))}
+      <div
+        className="m-2 flex flex-col items-center"
+        style={{
+          minHeight: 200,
+          minWidth: 170,
+        }}
+      >
+        {blocks?.map(({ type, params }, index) => (
+          <React.Fragment key={index}> {getComponent(type, { ...params })}</React.Fragment>
+        ))}
+      </div>
+      <button
+        onClick={handlePlay}
+        className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 mx-2 mb-2 rounded"
+      >
+        Play
+      </button>
     </div>
   )
 }

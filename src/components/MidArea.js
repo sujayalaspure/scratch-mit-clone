@@ -1,13 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react"
 import { useDrop } from "react-dnd"
-import update from "immutability-helper"
 
 import { useBlocks } from "../context"
-import Block from "./Block"
 import DropArea from "./DropArea"
-import { blocks } from "../context/sidebarItems"
 import { ItemTypes } from "../ItemTypes"
-import DraggableBlock from "./DraggableBlock"
 
 const styles = {
   minWidth: 100,
@@ -23,17 +19,16 @@ export default function MidArea() {
     y: 0,
   })
   useEffect(() => {
-    setBoxes(blocks.reduce((prev, item) => ({ ...prev, [item.id]: item }), {}))
+    // setBoxes(blocks.reduce((prev, item) => ({ ...prev, [item.id]: item }), {}))
   }, [])
 
   const handleDrop = useCallback(
-    (item, it) => {
-      console.log("onDrop", item, it)
-      if (it === null) {
-        console.log("null it ")
-        addDropArea({ x: pos.x - 250, y: pos.y }, item, it)
+    (item, id) => {
+      if (id === null) {
+        console.log("null id ")
+        addDropArea({ x: pos.x - 250, y: pos.y }, item, id)
       } else {
-        handleAddBlocks(item, it)
+        handleAddBlocks(item, id)
       }
     },
     [pos]
@@ -43,12 +38,7 @@ export default function MidArea() {
     () => ({
       accept: ItemTypes.BOX,
       drop(item, monitor) {
-        const delta = monitor.getDifferenceFromInitialOffset()
-        // let left = Math.round(delta.x)
-        // let top = Math.round(delta.y)
-        // console.log("delta drop")
         handleDrop(item, null)
-        // moveBox(item.id, left, top, item.bgColor)
         return undefined
       },
       collect: (monitor) => ({
@@ -60,7 +50,7 @@ export default function MidArea() {
         let left = Math.round(delta.x)
         let top = Math.round(delta.y)
         setPos({ x: left, y: top })
-        console.log("delta", delta)
+        // console.log("delta", delta)
         // moveBox(item.id, left, top, item.bgColor)
         return undefined
       },
@@ -68,7 +58,7 @@ export default function MidArea() {
     [handleDrop]
   )
 
-  console.log("boxes", dropAreas, pos)
+  // console.log("boxes", dropAreas, pos)
 
   const isActive = isOver
   const bg = isActive ? "bg-green-100" : "bg-white"
@@ -78,9 +68,12 @@ export default function MidArea() {
       <div ref={drop} className={`absolute h-full w-full ${bg}`}>
         {" "}
       </div>
+      {isActive && <DropArea pos={{ y: pos.y, x: pos.x - 300 }} />}
 
-      {Object.keys(dropAreas)?.map((it) => (
-        <DropArea {...dropAreas[it]} onDrop={(item) => handleDrop(item, dropAreas[it])} />
+      {Object.keys(dropAreas)?.map((id, idx) => (
+        <React.Fragment key={idx}>
+          <DropArea {...dropAreas[id]} onDrop={(item) => handleDrop(item, id)} />
+        </React.Fragment>
       ))}
     </div>
   )

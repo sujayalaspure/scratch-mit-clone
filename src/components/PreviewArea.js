@@ -4,7 +4,7 @@ import CatSprite from "./CatSprite"
 import Icon from "./Icon"
 
 export default function PreviewArea() {
-  const { runningBlocks } = useBlocks()
+  const { sprites } = useBlocks()
 
   const onClick = (e) => {
     e.stopPropagation()
@@ -18,8 +18,14 @@ export default function PreviewArea() {
           <Icon name="flag" size={25} className="text-green-600 mx-2 cursor-pointer" />
         </div>
       </div>
-      <div className="overflow-hidden h-full flex flex-row bg-white border-t border-l border-gray-200 rounded-tl-xl ml-2">
-        <CatSprite />
+      <div className="overflow-hidden h-full bg-white border-t border-l border-gray-200 rounded-tl-xl ml-2">
+        <div className="flex justify-around h-full">
+          {Object.keys(sprites).map((key, index) => (
+            <div className="absolute" key={sprites[key].id}>
+              <CatSprite id={sprites[key].id} />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )
