@@ -1,13 +1,18 @@
-const { merge } = require("webpack-merge");
-const common = require("./webpack.common.js");
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const { merge } = require("webpack-merge")
+const common = require("./webpack.common.js")
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
 
-process.env["NODE_ENV"] = "production";
+process.env["NODE_ENV"] = "production"
 
 module.exports = merge([
   common,
   {
     mode: "production",
+    performance: {
+      hints: false,
+      maxEntrypointSize: 512000,
+      maxAssetSize: 512000,
+    },
     optimization: {
       minimize: true,
       minimizer: [
@@ -17,4 +22,4 @@ module.exports = merge([
       ],
     },
   },
-]);
+])

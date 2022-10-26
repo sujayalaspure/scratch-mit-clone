@@ -2,7 +2,9 @@ import React from "react"
 import { useDrag } from "react-dnd"
 import Block from "./Block"
 
-function DraggableBlock({ id, children, bgColor, action }) {
+function DraggableBlock(props) {
+  // console.log("props", props)
+  const { id, children, bgColor, action } = props
   const [{ isDragging }, drag] = useDrag(
     () => ({
       type: "box",

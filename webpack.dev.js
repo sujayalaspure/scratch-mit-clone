@@ -12,6 +12,8 @@ module.exports = merge([
       port: 3000,
       historyApiFallback: true,
       watchContentBase: true,
+      hot: true, // optional, but you must not set both hot and liveReload to true
+      liveReload: true,
     },
   },
 ])
