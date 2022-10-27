@@ -1,4 +1,10 @@
-# Scratch starter project
+# MIT Scratch clone project
+
+---
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5430fbcd-c495-492c-a733-dbf0e4525514/deploy-status)](https://app.netlify.com/sites/sujay-scratch-mit/deploys)
+
+---
 
 To get started:
 
