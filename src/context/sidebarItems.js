@@ -7,7 +7,11 @@ export default [
     blocks: [
       {
         type: blockType.MOVE,
-        params: { steps: 10 },
+        params: { steps: 30, direction: "X" },
+      },
+      {
+        type: blockType.MOVE,
+        params: { steps: 30, direction: "Y" },
       },
       {
         type: blockType.TURN,
@@ -27,10 +31,10 @@ export default [
         type: blockType.FLAG,
         params: {},
       },
-      {
-        type: blockType.SPRITE,
-        params: {},
-      },
+      // {
+      //   type: blockType.SPRITE,
+      //   params: {},
+      // },
       {
         type: blockType.BROADCAST,
         params: { message: "Hello" },
@@ -68,7 +72,11 @@ export default [
       },
       {
         type: blockType.THINK,
-        params: { message: "Hello" },
+        params: { message: "Hmm...." },
+      },
+      {
+        type: blockType.THINK,
+        params: { message: "Hmmm...", duration: 2 },
       },
     ],
   },

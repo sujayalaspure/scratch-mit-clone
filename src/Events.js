@@ -1,7 +1,6 @@
 import React from "react"
 import { blockType } from "./components/getBlockComp"
 import { moveDir } from "./components/motion/Move"
-import { useBlocks } from "./context"
 
 const move = (id, params) => {
   const { direction, steps } = params
@@ -9,7 +8,7 @@ const move = (id, params) => {
   var left = el.offsetLeft
   var top = el.offsetTop
   el.style.position = "relative"
-  el.style.left = left + steps + "px"
+  if (direction === moveDir.X) el.style.left = left + steps + "px"
   if (direction === moveDir.Y) el.style.top = top + steps + "px"
 }
 
@@ -28,7 +27,39 @@ const wait = (ms) => {
   }
 }
 
+const sayMessage = (id, params) => {
+  const el = document.getElementById(`${id}-message-box`)
+  const el2 = document.getElementById(`${id}-message-box1`)
+  el.style.display = "block"
+  el.style.position = "relative"
+  el2.style.display = "none"
+  el.innerHTML = params.message
+  if (params.duration) {
+    setTimeout(() => {
+      el.style.display = "none"
+    }, params.duration * 1000)
+  }
+}
+
+const think = (id, params) => {
+  const el = document.getElementById(`${id}-message-box`)
+  const el2 = document.getElementById(`${id}-message-box1`)
+  el.style.display = "block"
+  el.style.position = "relative"
+  el2.style.display = "block"
+  el2.style.position = "relative"
+
+  el.innerHTML = params.message
+  if (params.duration) {
+    setTimeout(() => {
+      el.style.display = "none"
+      el2.style.display = "none"
+    }, params.duration * 1000)
+  }
+}
+
 const runEvent = (currentSprite, type, params) => {
+  console.log("run event", type)
   switch (type) {
     case blockType.MOVE:
       move(currentSprite.id, params)
@@ -39,11 +70,16 @@ const runEvent = (currentSprite, type, params) => {
     case blockType.WAIT:
       wait(params.seconds)
       break
+    case blockType.SAY_MESSAGE:
+      sayMessage(currentSprite.id, params)
+      break
+    case blockType.THINK:
+      think(currentSprite.id, params)
+      break
 
     default:
       break
   }
-  return <></>
 }
 
 export default runEvent

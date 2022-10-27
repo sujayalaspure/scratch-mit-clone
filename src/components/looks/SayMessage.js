@@ -15,4 +15,16 @@ function SayMessage({ duration, message }) {
   )
 }
 
+export function MessageBox({ id }) {
+  return (
+    <>
+      <div className="hidden border-2 p-2 ml-3 mb-2 w-auto whitespace-nowrap" id={id + "-message-box"}></div>
+      <div
+        className="hidden rounded-full border-2 w-4 left-1/2 h-4 ml-3 mb-2 whitespace-nowrap"
+        id={id + "-message-box1"}
+      ></div>
+    </>
+  )
+}
+
 export default SayMessage

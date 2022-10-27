@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react"
 import { blockType } from "../components/getBlockComp"
-import { actionTypes } from "./sidebarItems"
 
 const Context = createContext()
 
@@ -10,9 +9,9 @@ const ContextProvider = ({ children }) => {
   const [runningBlocks, setRunningBlocks] = useState([])
 
   const [sprites, setSprites] = useState({
-    0: { id: "sprite-0", pos: { x: 0, y: 0 }, angle: 0 },
+    "sprite-0": { id: "sprite-0", pos: { x: 0, y: 100 }, angle: 0 },
   })
-  const [currentActiveSprite, setCurrentActiveSprite] = useState(sprites[0])
+  const [currentActiveSprite, setCurrentActiveSprite] = useState(sprites["sprite-0"])
 
   const [dropAreas, setDropAreas] = useState({
     0: { id: 0, blocks: [], pos: { x: 50, y: 70 } },
@@ -47,23 +46,23 @@ const ContextProvider = ({ children }) => {
     }))
   }
 
-  const addBlocks = (newBlock, pos) => {
-    if (position.x === 0 && position.y === 0) {
-      setPosition(pos)
-      // console.log("update pos")
-    }
-    // console.log("helo", runningBlocks, position)
-    if (newBlock.action.type === actionTypes.EVENT_CLICK && lastId !== 0) {
-      if (lastAction) return
-      setRunningBlocks((prev) => [{ ...newBlock, id: lastId }, ...prev])
-      lastId++
-      lastAction = true
-      return
-    }
+  // const addBlocks = (newBlock, pos) => {
+  //   if (position.x === 0 && position.y === 0) {
+  //     setPosition(pos)
+  //     // console.log("update pos")
+  //   }
+  //   // console.log("helo", runningBlocks, position)
+  //   if (newBlock.action.type === actionTypes.EVENT_CLICK && lastId !== 0) {
+  //     if (lastAction) return
+  //     setRunningBlocks((prev) => [{ ...newBlock, id: lastId }, ...prev])
+  //     lastId++
+  //     lastAction = true
+  //     return
+  //   }
 
-    setRunningBlocks((prev) => [...prev, { ...newBlock, id: lastId }])
-    lastId++
-  }
+  //   setRunningBlocks((prev) => [...prev, { ...newBlock, id: lastId }])
+  //   lastId++
+  // }
 
   useEffect(() => {
     console.log("runningBlocks")
@@ -71,7 +70,7 @@ const ContextProvider = ({ children }) => {
 
   const value = {
     runningBlocks,
-    addBlocks,
+    // addBlocks,
     position,
     dropAreas,
     handleAddBlocks,
@@ -79,6 +78,7 @@ const ContextProvider = ({ children }) => {
     currentActiveSprite,
     sprites,
     setCurrentActiveSprite,
+    setSprites,
   }
 
   return <Context.Provider value={value}>{children}</Context.Provider>

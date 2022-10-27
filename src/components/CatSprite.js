@@ -1,10 +1,11 @@
 import React from "react"
+import { MessageBox } from "./looks/SayMessage"
 
 export default function CatSprite({ id }) {
   return (
     <div
       id={id}
-      className="inline-block z-0"
+      className="inline-block z-0 cursor-pointer"
       style={{
         transition:
           "width 2s,height 2s,background-color 2s,transform 2s,position 2s,left 2s,right 2s,scale 2s,top 2s,-webkit-transform 2s",
@@ -188,6 +189,7 @@ export default function CatSprite({ id }) {
           </g>
         </g>
       </svg>
+      <div>{id} </div>
     </div>
   )
 }

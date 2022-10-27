@@ -17,9 +17,12 @@ function DraggableBlock(props) {
   return (
     <div
       ref={drag}
+      style={{
+        cursor: !isDragging ? "grab" : "grabbing",
+      }}
       className={`${isDragging && "border-2 opacity-70"} ${
         params.bgColor
-      } text-white p-2 my-1 w-max text-center text-sm cursor-pointer rounded-sm flex flex-row items-center`}
+      } text-white p-2 my-1 w-max text-center text-sm focus:cursor-move rounded-sm flex flex-row items-center`}
     >
       {props.children}
     </div>

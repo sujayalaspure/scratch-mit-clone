@@ -55,7 +55,7 @@ function DropArea({ onDrop, blocks, pos }) {
       }}
     >
       <div
-        className="m-2 flex flex-col items-center"
+        className="m-2 mb-10 flex flex-col items-center"
         style={{
           minHeight: 200,
           minWidth: 170,
@@ -65,12 +65,12 @@ function DropArea({ onDrop, blocks, pos }) {
           <React.Fragment key={index}> {getComponent(type, { ...params })}</React.Fragment>
         ))}
       </div>
-      <button
+      {/* <button
         onClick={handlePlay}
         className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 mx-2 mb-2 rounded"
       >
         Play
-      </button>
+      </button> */}
     </div>
   )
 }
