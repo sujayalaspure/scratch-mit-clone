@@ -57,6 +57,19 @@ const think = (id, params) => {
     }, params.duration * 1000)
   }
 }
+const broadcast = (params) => {
+  const el = document.getElementById(`broadcast-messsage`)
+  const txt = document.getElementById(`broadcast-messsage-text`)
+  el.classList.remove("hidden")
+
+  txt.innerText = params.message
+  const duration = 5
+  if (duration) {
+    setTimeout(() => {
+      el.classList.add("hidden")
+    }, duration * 1000)
+  }
+}
 
 const runEvent = (currentSprite, type, params) => {
   console.log("run event", type)
@@ -75,6 +88,9 @@ const runEvent = (currentSprite, type, params) => {
       break
     case blockType.THINK:
       think(currentSprite.id, params)
+      break
+    case blockType.BROADCAST:
+      broadcast(params)
       break
 
     default:
