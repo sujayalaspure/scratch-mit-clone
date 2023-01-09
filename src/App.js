@@ -7,6 +7,7 @@ import { DndProvider } from "react-dnd"
 import { HTML5Backend } from "react-dnd-html5-backend"
 import { withBlocks } from "./context"
 import { BroadcastMessage } from "./components/events/Broadcast"
+import RightArea from "./components/RightArea"
 
 function App() {
   return (
@@ -18,8 +19,8 @@ function App() {
               <Sidebar />
               <MidArea />
             </div>
+            {/* <RightArea /> */}
           </DndProvider>
-          <PreviewArea />
         </div>
         <BroadcastMessage />
       </div>

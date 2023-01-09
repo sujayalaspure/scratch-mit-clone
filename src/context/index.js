@@ -31,6 +31,14 @@ const ContextProvider = ({ children }) => {
     }))
   }
 
+  const updateDropAreaPos = (id, pos) => {
+    console.log("updateDropAreaPos", id, pos)
+    setDropAreas((prev) => ({
+      ...prev,
+      [id]: { ...prev[id], pos: { ...pos } },
+    }))
+  }
+
   const handleAddBlocks = (block, id) => {
     setDropAreas((prev) => ({
       ...prev,
@@ -79,6 +87,7 @@ const ContextProvider = ({ children }) => {
     sprites,
     setCurrentActiveSprite,
     setSprites,
+    updateDropAreaPos,
   }
 
   return <Context.Provider value={value}>{children}</Context.Provider>
