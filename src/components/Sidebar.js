@@ -8,8 +8,8 @@ export default function Sidebar() {
       {sidebarItems.map((item, index) => (
         <React.Fragment key={index}>
           <div className="font-bold"> {item.label} </div>
-          {item?.blocks.map(({ type, params }, index) => (
-            <React.Fragment key={index}> {getComponent(type, { ...params, bgColor: item.bgColor })}</React.Fragment>
+          {item?.blocks.map(({type, params}, index) => (
+            <React.Fragment key={index}> {getComponent(type, {...params, bgColor: item.bgColor}, true)}</React.Fragment>
           ))}
         </React.Fragment>
       ))}

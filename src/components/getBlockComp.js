@@ -26,36 +26,40 @@ export const blockType = {
   SPRITE: "SPRITE",
 }
 
-const getCompByType = (key, params) => {
+const getCompByType = (key, params, isSidebar) => {
   switch (key) {
     case blockType.MOVE:
-      return <Move {...params} />
+      return <Move {...params} isSidebar={isSidebar} />
     case blockType.TURN:
-      return <Turn {...params} />
+      return <Turn {...params} isSidebar={isSidebar} />
     case blockType.SAY_MESSAGE:
-      return <SayMessage {...params} />
+      return <SayMessage {...params} isSidebar={isSidebar} />
     case blockType.THINK:
-      return <Think {...params} />
+      return <Think {...params} isSidebar={isSidebar} />
     case blockType.BROADCAST:
-      return <Broadcast {...params} />
+      return <Broadcast {...params} isSidebar={isSidebar} />
     case blockType.FLAG:
-      return <FlagClick {...params} />
+      return <FlagClick {...params} isSidebar={isSidebar} />
     case blockType.SPRITE:
-      return <SpriteClick {...params} />
+      return <SpriteClick {...params} isSidebar={isSidebar} />
     case blockType.WAIT:
-      return <Wait {...params} />
+      return <Wait {...params} isSidebar={isSidebar} />
     case blockType.REPEAT:
-      return <Repeat {...params} />
+      return <Repeat {...params} isSidebar={isSidebar} />
     case blockType.STOP:
-      return <Stop {...params} />
+      return <Stop {...params} isSidebar={isSidebar} />
 
     default:
       break
   }
 }
 
-const getComponent = (type, params) => {
-  return <DraggableBlock {...{ params, type }}>{getCompByType(type, params)}</DraggableBlock>
+const getComponent = (type, params, isSidebar = false) => {
+  return (
+    <DraggableBlock isDragEnabled={isSidebar} {...{params, type}}>
+      {getCompByType(type, params, isSidebar)}
+    </DraggableBlock>
+  )
 }
 
 export default getComponent

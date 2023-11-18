@@ -1,15 +1,15 @@
 import React from "react"
-import { useDrag, useDrop } from "react-dnd"
-import { useBlocks } from "../context"
+import {useDrag, useDrop} from "react-dnd"
+import {useBlocks} from "../context"
 import runEvent from "../Events"
-import { ItemTypes } from "../ItemTypes"
-import getComponent, { blockType } from "./getBlockComp"
+import {ItemTypes} from "../ItemTypes"
+import getComponent, {blockType} from "./getBlockComp"
 
-function DropArea({ onDrop, blocks, pos, id }) {
-  const { currentActiveSprite, setCurrentActiveSprite } = useBlocks()
-  console.log("DropArea", blocks, pos, id)
+function DropArea({onDrop, blocks, pos, id}) {
+  const {currentActiveSprite, setCurrentActiveSprite} = useBlocks()
+  // console.log("DropArea", blocks, pos, id)
 
-  const [{ isOver, canDrop }, drop] = useDrop(
+  const [{isOver, canDrop}, drop] = useDrop(
     () => ({
       accept: ItemTypes.BOX,
       drop: onDrop,
@@ -21,10 +21,10 @@ function DropArea({ onDrop, blocks, pos, id }) {
     []
   )
 
-  const [{ isDragging }, drag] = useDrag(
+  const [{isDragging}, drag] = useDrag(
     () => ({
       type: ItemTypes.DROP_AREA,
-      item: { pos, id },
+      item: {pos, id},
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
       }),
@@ -36,7 +36,7 @@ function DropArea({ onDrop, blocks, pos, id }) {
   const bg = isActive ? "bg-green-100" : canDrop ? "bg-red-100" : "bg-white"
 
   return (
-    <div ref={drag}>
+    <div>
       <div
         ref={drop}
         className={`max-w-sm w-max border border-dashed border-gray-400  absolute rounded overflow-hidden shadow-lg ${bg} items-center flex flex-col`}
@@ -52,8 +52,8 @@ function DropArea({ onDrop, blocks, pos, id }) {
             minWidth: 170,
           }}
         >
-          {blocks?.map(({ type, params }, index) => (
-            <React.Fragment key={index}> {getComponent(type, { ...params })}</React.Fragment>
+          {blocks?.map(({type, params}, index) => (
+            <React.Fragment key={index}> {getComponent(type, {...params})}</React.Fragment>
           ))}
         </div>
       </div>

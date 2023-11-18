@@ -1,19 +1,19 @@
 import React from "react"
-import { useBlocks } from "../../context"
+import {useBlocks} from "../../context"
 import runEvent from "../../Events"
-import { blockType } from "../getBlockComp"
+import {blockType} from "../getBlockComp"
 
 export const moveDir = {
   X: "X",
   Y: "Y",
 }
 
-function Move({ direction, steps }) {
-  const { currentActiveSprite } = useBlocks()
+function Move({direction, steps, isSidebar}) {
+  const {currentActiveSprite} = useBlocks()
 
   const onPress = (e) => {
     e.stopPropagation()
-    runEvent(currentActiveSprite, blockType.MOVE, { direction, steps })
+    runEvent(currentActiveSprite, blockType.MOVE, {direction, steps})
   }
   return (
     <div className="flex flex-col">

@@ -3,10 +3,10 @@ import Sidebar from "./components/Sidebar"
 import MidArea from "./components/MidArea"
 import PreviewArea from "./components/PreviewArea"
 
-import { DndProvider } from "react-dnd"
-import { HTML5Backend } from "react-dnd-html5-backend"
-import { withBlocks } from "./context"
-import { BroadcastMessage } from "./components/events/Broadcast"
+import {DndProvider} from "react-dnd"
+import {HTML5Backend} from "react-dnd-html5-backend"
+import {withBlocks} from "./context"
+import {BroadcastMessage} from "./components/events/Broadcast"
 import RightArea from "./components/RightArea"
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
               <Sidebar />
               <MidArea />
             </div>
-            {/* <RightArea /> */}
+            <RightArea />
           </DndProvider>
         </div>
         <BroadcastMessage />

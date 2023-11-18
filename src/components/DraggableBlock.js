@@ -1,15 +1,16 @@
 import React from "react"
-import { useDrag } from "react-dnd"
+import {useDrag} from "react-dnd"
 
 function DraggableBlock(props) {
-  const { params, type } = props
-  const [{ isDragging }, drag] = useDrag(
+  const {params, type, isDragEnabled} = props
+  const [{isDragging}, drag] = useDrag(
     () => ({
       type: "box",
-      item: { params, type },
+      item: {params, type},
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
       }),
+      canDrag: isDragEnabled,
     }),
     []
   )

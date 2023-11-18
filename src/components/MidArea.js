@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useState } from "react"
-import { useDrop } from "react-dnd"
+import React, {useCallback, useEffect, useState} from "react"
+import {useDrop} from "react-dnd"
 
-import { useBlocks } from "../context"
+import {useBlocks} from "../context"
 import DropArea from "./DropArea"
-import { ItemTypes } from "../ItemTypes"
+import {ItemTypes} from "../ItemTypes"
 
 const styles = {
   minWidth: 100,
@@ -12,33 +12,34 @@ const styles = {
 }
 
 export default function MidArea() {
-  const { addBlocks, updateDropAreaPos, dropAreas, handleAddBlocks, addDropArea } = useBlocks()
+  const {addBlocks, updateDropAreaPos, dropAreas, handleAddBlocks, addDropArea} = useBlocks()
   const [pos, setPos] = useState({
     x: 0,
     y: 0,
     isVisible: false,
   })
-  useEffect(() => {
-    // setBoxes(blocks.reduce((prev, item) => ({ ...prev, [item.id]: item }), {}))
-  }, [])
+  // useEffect(() => {
+  //   // setBoxes(blocks.reduce((prev, item) => ({ ...prev, [item.id]: item }), {}))
+  // }, [])
 
   const handleDrop = useCallback(
     (type, item, id) => {
+      console.log("handleDrop", type, item, id)
       if (type === ItemTypes.BOX) {
         if (id === null) {
-          addDropArea({ x: pos.x - 250, y: pos.y }, item, id)
+          addDropArea({x: pos.x, y: pos.y}, item, id)
         } else {
           handleAddBlocks(item, id)
         }
       } else if (type === ItemTypes.DROP_AREA) {
-        console.log("drop area", item)
-        updateDropAreaPos(item.id, { x: pos.x, y: pos.y })
+        // console.log("drop area", item)
+        updateDropAreaPos(item.id, {x: pos.x, y: pos.y})
       }
     },
     [pos]
   )
 
-  const [{ isOver, canDrop }, drop] = useDrop(
+  const [{isOver, canDrop}, drop] = useDrop(
     () => ({
       accept: [ItemTypes.BOX, ItemTypes.DROP_AREA],
       drop(item, monitor) {
@@ -52,7 +53,7 @@ export default function MidArea() {
         // } else {
         // }
         handleDrop(monitor.getItemType(), item, null)
-        setPos((prev) => ({ ...prev, isVisible: false }))
+        setPos((prev) => ({...prev, isVisible: false}))
         return undefined
       },
       collect: (monitor) => ({
@@ -61,10 +62,10 @@ export default function MidArea() {
       }),
       hover(item, monitor) {
         const delta = monitor.getClientOffset()
-        let left = Math.round(delta.x)
+        let left = Math.round(delta.x) - 350
         let top = Math.round(delta.y)
-        setPos({ x: left, y: top, isVisible: monitor.getItemType() === ItemTypes.BOX })
-        // console.log("delta", delta)
+        setPos({x: left, y: top, isVisible: monitor.getItemType() === ItemTypes.BOX})
+        console.log("delta", delta)
         // moveBox(item.id, left, top, item.bgColor)
         return undefined
       },
@@ -82,11 +83,11 @@ export default function MidArea() {
       <div ref={drop} className={`absolute h-full w-full ${bg}`}>
         {" "}
       </div>
-      {pos.isVisible && <DropArea pos={{ y: pos.y, x: pos.x - 300 }} />}
+      {pos.isVisible && <DropArea pos={{y: pos.y, x: pos.x}} />}
       {console.log("dropAreas", dropAreas)}
       {Object.keys(dropAreas)?.map((id, idx) => (
         <React.Fragment key={idx}>
-          <DropArea {...dropAreas[id]} onDrop={(item) => handleDrop(item, id)} />
+          <DropArea {...dropAreas[id]} onDrop={(item) => handleDrop(ItemTypes.BOX, item, id)} />
         </React.Fragment>
       ))}
     </div>
